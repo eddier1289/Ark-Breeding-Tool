@@ -1,1 +1,13 @@
-<p>dino-stats works!</p>
+<div class="dino-stats" fxLayout="row">
+  <div class="dino-name">{{dino?.name}}</div>
+  <div>{{dino?.sex}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('stamina')}">{{dino?.stats?.stamina}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('oxygen')}">{{dino?.stats?.oxygen}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('food')}">{{dino?.stats?.food}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('weight')}">{{dino?.stats?.weight}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('attack')}">{{dino?.stats?.attack}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('speed')}">{{dino?.stats?.speed}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('health')}">{{dino?.stats?.health}}</div>
+  <div>{{totalLevel()}}</div>
+  <div>{{dino?.maxStats?.length}}</div>
+</div>

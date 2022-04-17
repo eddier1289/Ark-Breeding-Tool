@@ -5,18 +5,27 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DinoBreedingComponent } from './components/dino-breeding/dino-breeding.component';
 import { DinoStatsComponent } from './components/dino-stats/dino-stats.component';
+import {FlexLayoutModule} from "@angular/flex-layout";
+import { BestPossibleDinoComponent } from './components/best-possible-dino/best-possible-dino.component';
+import {DinosaurService} from "./services/dinosaur.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     DinoBreedingComponent,
-    DinoStatsComponent
+    DinoStatsComponent,
+    BestPossibleDinoComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FlexLayoutModule
+    ],
+  providers: [
+    {
+      provide: DinosaurService, useClass: DinosaurService
+    }
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
