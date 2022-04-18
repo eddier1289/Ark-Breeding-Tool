@@ -2,3 +2,16 @@
 <div *ngFor="let dino of service.dinos">
   <app-dino-stats [dino]="dino"></app-dino-stats>
 </div>
+<div *ngFor="let group of service.breedingGroups">
+  <div>{{group.male.name}}</div>
+  <div class="tmp" *ngFor="let female of group.females" fxLayout="row">
+    <div>{{female.female.name}}</div>
+    <div>{{female.maxDescendant.stamina}}</div>
+    <div>{{female.maxDescendant.oxygen}}</div>
+    <div>{{female.maxDescendant.food}}</div>
+    <div>{{female.maxDescendant.weight}}</div>
+    <div>{{female.maxDescendant.attack}}</div>
+    <div>{{female.maxDescendant.speed}}</div>
+    <div>{{female.maxDescendant.health}}</div>
+  </div>
+</div>

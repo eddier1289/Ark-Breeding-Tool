@@ -9,14 +9,25 @@ export interface DinosaurStats {
 }
 
 export interface WildDinosaur {
-    sex: 'M' | 'F';
-    stats: DinosaurStats;
+  sex: 'M' | 'F';
+  stats: DinosaurStats;
 }
 
 export interface TamedDinosaur extends WildDinosaur {
-    name: string;
+  id: number;
+  name: string;
 }
 
 export interface TamedDinosaurViewModel extends TamedDinosaur {
   maxStats: (keyof DinosaurStats)[];
+}
+
+export interface BreedingPair {
+  female: TamedDinosaur;
+  maxDescendant: DinosaurStats;
+}
+
+export interface BreedingGroup {
+  male: TamedDinosaur;
+  females: BreedingPair[];
 }
