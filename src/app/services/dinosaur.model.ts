@@ -31,3 +31,8 @@ export interface BreedingGroup {
   male: TamedDinosaur;
   females: BreedingPair[];
 }
+
+export interface TamedDinosaurGroup {
+  groupName: string;
+  dinosaurs: TamedDinosaurViewModel[];
+}

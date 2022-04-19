@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DinosaurStats, TamedDinosaurViewModel} from "../../services/dinosaur.model";
 
 @Component({
@@ -9,6 +9,9 @@ import {DinosaurStats, TamedDinosaurViewModel} from "../../services/dinosaur.mod
 export class DinoStatsComponent implements OnInit {
   @Input()
   dino: TamedDinosaurViewModel | null = null;
+
+  @Output()
+  deleteDino: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() {
   }
@@ -34,5 +37,11 @@ export class DinoStatsComponent implements OnInit {
     return this.dino === null ?
       false :
       this.dino?.maxStats.filter(s => s === stat).length > 0;
+  }
+
+  removeDino(id: number | undefined) {
+    if (id !== undefined) {
+      this.deleteDino.emit(id);
+    }
   }
 }

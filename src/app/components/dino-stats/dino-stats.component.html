@@ -9,5 +9,5 @@
   <div [ngClass]="{'best-stat': containsMaxStat('speed')}">{{dino?.stats?.speed}}</div>
   <div [ngClass]="{'best-stat': containsMaxStat('health')}">{{dino?.stats?.health}}</div>
   <div>{{totalLevel()}}</div>
-  <div>{{dino?.maxStats?.length}}</div>
+  <button (click)="removeDino(dino?.id)">X</button>
 </div>

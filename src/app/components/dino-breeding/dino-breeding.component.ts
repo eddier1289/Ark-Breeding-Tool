@@ -154,4 +154,8 @@ export class DinoBreedingComponent implements OnInit {
       }
     ];
   }
+
+  deleteDino($event: number) {
+    this.service.deleteDino($event);
+  }
 }

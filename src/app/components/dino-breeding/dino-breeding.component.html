@@ -1,6 +1,6 @@
 <app-best-possible-dino></app-best-possible-dino>
 <div *ngFor="let dino of service.dinos">
-  <app-dino-stats [dino]="dino"></app-dino-stats>
+  <app-dino-stats (deleteDino)="deleteDino($event)" [dino]="dino"></app-dino-stats>
 </div>
 <div *ngFor="let group of service.breedingGroups">
   <div>{{group.male.name}}</div>

@@ -1,4 +1,10 @@
-import {BreedingGroup, DinosaurStats, TamedDinosaur, TamedDinosaurViewModel} from "./dinosaur.model";
+import {
+  BreedingGroup,
+  DinosaurStats,
+  TamedDinosaur,
+  TamedDinosaurGroup,
+  TamedDinosaurViewModel
+} from "./dinosaur.model";
 import {Injectable} from "@angular/core";
 
 interface GoodMaleStats {
@@ -14,9 +20,14 @@ interface PotentialBreedingPair {
 
 @Injectable()
 export class DinosaurService {
+  private _dinoGroups: TamedDinosaurGroup[] = [];
   private _dinos: TamedDinosaurViewModel[] = [];
   bestStats: DinosaurStats | null = null;
   breedingGroups: BreedingGroup[] = [];
+
+  get dinoGroups(): TamedDinosaurGroup[] {
+    return this._dinoGroups;
+  }
 
   get dinos(): TamedDinosaurViewModel[] {
     return this._dinos.sort((a, b) => a.sex.localeCompare(b.sex));
@@ -25,9 +36,42 @@ export class DinosaurService {
   set dinos(value: TamedDinosaur[]) {
     this.bestStats = this.calculateBestDinoStats(value);
 
-    this._dinos = value.map(d => ({...d, maxStats: this.getMaxStats(d, this.bestStats)}));
+    this._dinos = value.map(d => this.createDinoViewModel(d));
 
     this.breedingGroups = this.getBreedingGroups();
+  }
+
+  private createDinoViewModel(dino: TamedDinosaur): TamedDinosaurViewModel {
+    return ({...dino, maxStats: this.getMaxStats(dino, this.bestStats)});
+  }
+
+  private getNextDinoId(): number {
+    return this._dinoGroups
+      .reduce((maxId, currentGroup) => {
+        const maxDinoId = currentGroup.dinosaurs.reduce((maxId, currentDino) =>
+          maxId > currentDino.id ? maxId : currentDino.id, 0);
+
+        return maxId > maxDinoId ? maxId : maxDinoId;
+      }, 0) + 1;
+  }
+
+  public addDino(dino: TamedDinosaur, dinoGroup: string) {
+    dino.id = this.getNextDinoId();
+
+    let group = this._dinoGroups.find(value => value.groupName === dinoGroup);
+
+    if (group === undefined) {
+      group = {groupName: dinoGroup, dinosaurs: []} as TamedDinosaurGroup;
+      this._dinoGroups.push(group);
+    }
+
+    group.dinosaurs.push(this.createDinoViewModel(dino));
+  }
+
+  public deleteDino(dinoId: number) {
+    for (let dinoGroup of this._dinoGroups) {
+      dinoGroup.dinosaurs = dinoGroup.dinosaurs.filter(d => d.id !== dinoId);
+    }
   }
 
   getMaxStats(dino: TamedDinosaur, maxStats: DinosaurStats | null): (keyof DinosaurStats)[] {

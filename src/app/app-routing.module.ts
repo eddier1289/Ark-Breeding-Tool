@@ -4,6 +4,11 @@ import { DinoBreedingComponent } from './components/dino-breeding/dino-breeding.
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/dinos'
+  },
+  {
     path: 'dinos',
     component: DinoBreedingComponent
   }
