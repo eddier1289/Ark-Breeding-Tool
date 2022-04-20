@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {DinosaurService} from "../../services/dinosaur.service";
+import {FormControl, FormGroup} from "@angular/forms";
+import {TamedDinosaur} from "../../services/dinosaur.model";
 
 @Component({
   selector: 'app-add-dino',
@@ -7,42 +9,35 @@ import {DinosaurService} from "../../services/dinosaur.service";
   styleUrls: ['./add-dino.component.scss']
 })
 export class AddDinoComponent {
-  name: string | undefined = 'Billy';
-  sex: 'M' | 'F' | undefined = 'M';
-  stamina: number | undefined = 38;
-  oxygen: number | undefined = 40;
-  food: number | undefined = 25;
-  weight: number | undefined = 38;
-  attack: number | undefined = 40;
-  speed: number | undefined = 28;
-  health: number | undefined = 41;
+  dinoForm = new FormGroup({
+    name: new FormControl(''),
+    sex: new FormControl(''),
+    stamina: new FormControl(''),
+    oxygen: new FormControl(''),
+    food: new FormControl(''),
+    weight: new FormControl(''),
+    attack: new FormControl(''),
+    speed: new FormControl(''),
+    health: new FormControl('')
+  });
 
   constructor(private service: DinosaurService) {
   }
 
   submit(): void {
-    console.log('submitted');
+    console.log(this.dinoForm.value);
+    this.service.addDino({
+      id: 1, name: this.dinoForm.value.name, sex: this.dinoForm.value.sex === 'F' ? 'F' : 'M', stats: {
+        stamina: this.dinoForm.value.stamina,
+        oxygen: this.dinoForm.value.oxygen,
+        food: this.dinoForm.value.food,
+        weight: this.dinoForm.value.weight,
+        attack: this.dinoForm.value.attack,
+        speed: this.dinoForm.value.speed,
+        health: this.dinoForm.value.health,
+      }
+    } as TamedDinosaur, "Raptors");
 
-    if (this.name !== undefined &&
-      this.sex !== undefined &&
-      this.stamina !== undefined &&
-      this.oxygen !== undefined &&
-      this.food !== undefined &&
-      this.weight !== undefined &&
-      this.attack !== undefined &&
-      this.speed !== undefined &&
-      this.health !== undefined) {
-      this.service.addDino({
-        id: 0, sex: this.sex, name: this.name, stats: {
-          stamina: this.stamina,
-          oxygen: this.oxygen,
-          food: this.food,
-          weight: this.weight,
-          attack: this.attack,
-          speed: this.speed,
-          health: this.health
-        }
-      }, "Raptors");
-    }
+    this.dinoForm.reset();
   }
 }

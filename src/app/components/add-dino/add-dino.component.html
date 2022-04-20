@@ -1,12 +1,12 @@
-<div fxLayout="row">
-  <input class="name" placeholder="Name" [value]="name">
-  <input class="sex" [value]="sex">
-  <input [value]="stamina">
-  <input [value]="oxygen">
-  <input [value]="food">
-  <input [value]="weight">
-  <input [value]="attack">
-  <input [value]="speed">
-  <input [value]="health">
-  <button (click)="submit()"></button>
-</div>
+<form [formGroup]="dinoForm" fxLayout="row" (ngSubmit)="submit()">
+  <input class="name" type="text" formControlName="name">
+  <input type="text" formControlName="sex">
+  <input type="number" formControlName="stamina">
+  <input type="number" formControlName="oxygen">
+  <input type="number" formControlName="food">
+  <input type="number" formControlName="weight">
+  <input type="number" formControlName="attack">
+  <input type="number" formControlName="speed">
+  <input type="number" formControlName="health">
+  <button type="submit">Add</button>
+</form>

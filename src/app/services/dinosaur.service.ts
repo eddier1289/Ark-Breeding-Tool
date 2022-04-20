@@ -6,6 +6,7 @@ import {
   TamedDinosaurViewModel
 } from "./dinosaur.model";
 import {Injectable} from "@angular/core";
+import {group} from "@angular/animations";
 
 interface GoodMaleStats {
   id: number;
@@ -45,7 +46,6 @@ export class DinosaurService {
   }
 
   public addDino(dino: TamedDinosaur, dinoGroup: string) {
-    console.log('adding dino');
     console.log(dino);
 
     dino.id = this.getNextDinoId();
@@ -72,7 +72,14 @@ export class DinosaurService {
 
   public deleteDino(dinoId: number) {
     for (let dinoGroup of this._dinoGroups) {
+      const oldDinoCount = dinoGroup.dinosaurs.length;
+
       dinoGroup.dinosaurs = dinoGroup.dinosaurs.filter(d => d.id !== dinoId);
+
+      if(dinoGroup.dinosaurs.length < oldDinoCount){
+        dinoGroup.bestStats = this.calculateBestDinoStats(dinoGroup.dinosaurs);
+        dinoGroup.breedingGroups = this.getBreedingGroups(dinoGroup.dinosaurs);
+      }
     }
 
     localStorage.setItem('dinoGroups', JSON.stringify(this._dinoGroups));

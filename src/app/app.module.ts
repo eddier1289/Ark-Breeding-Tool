@@ -9,6 +9,7 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import { BestPossibleDinoComponent } from './components/best-possible-dino/best-possible-dino.component';
 import {DinosaurService} from "./services/dinosaur.service";
 import { AddDinoComponent } from './components/add-dino/add-dino.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AddDinoComponent } from './components/add-dino/add-dino.component';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        ReactiveFormsModule
     ],
   providers: [
     {
