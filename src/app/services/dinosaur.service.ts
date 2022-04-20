@@ -41,6 +41,9 @@ export class DinosaurService {
   }
 
   public addDino(dino: TamedDinosaur, dinoGroup: string) {
+    console.log('adding dino');
+    console.log(dino);
+
     dino.id = this.getNextDinoId();
 
     let group = this._dinoGroups.find(value => value.groupName === dinoGroup);
@@ -54,9 +57,11 @@ export class DinosaurService {
 
     group.dinosaurs.push(this.createDinoViewModel(dino, group.bestStats));
 
-    group.breedingGroups = this.getBreedingGroups(group.dinosaurs);
+    const bestStats = group.bestStats;
 
-    console.log(group);
+    group.dinosaurs.forEach(d => d.maxStats = this.getMaxStats(d, bestStats));
+
+    group.breedingGroups = this.getBreedingGroups(group.dinosaurs);
   }
 
   public deleteDino(dinoId: number) {
@@ -157,8 +162,6 @@ export class DinosaurService {
 
       return groups;
     }, []);
-
-    console.log(results);
 
     return results;
   }

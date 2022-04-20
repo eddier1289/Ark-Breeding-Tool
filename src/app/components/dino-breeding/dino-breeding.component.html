@@ -3,6 +3,7 @@
   <div *ngFor="let dino of dinoGroup.dinosaurs">
     <app-dino-stats (deleteDino)="deleteDino($event)" [dino]="dino"></app-dino-stats>
   </div>
+  <app-add-dino></app-add-dino>
   <div *ngFor="let group of dinoGroup.breedingGroups">
     <div>{{group.male.name}}</div>
     <div class="tmp" *ngFor="let female of group.females" fxLayout="row">

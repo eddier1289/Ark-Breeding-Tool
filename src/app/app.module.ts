@@ -8,13 +8,15 @@ import { DinoStatsComponent } from './components/dino-stats/dino-stats.component
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { BestPossibleDinoComponent } from './components/best-possible-dino/best-possible-dino.component';
 import {DinosaurService} from "./services/dinosaur.service";
+import { AddDinoComponent } from './components/add-dino/add-dino.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DinoBreedingComponent,
     DinoStatsComponent,
-    BestPossibleDinoComponent
+    BestPossibleDinoComponent,
+    AddDinoComponent
   ],
     imports: [
         BrowserModule,
