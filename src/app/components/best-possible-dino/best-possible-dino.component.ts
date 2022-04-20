@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {DinosaurService} from "../../services/dinosaur.service";
+import {TamedDinosaurGroup, TamedDinosaurViewModel} from "../../services/dinosaur.model";
 
 @Component({
   selector: 'app-best-possible-dino',
@@ -7,20 +8,23 @@ import {DinosaurService} from "../../services/dinosaur.service";
   styleUrls: ['./best-possible-dino.component.scss']
 })
 export class BestPossibleDinoComponent {
-  constructor(public service: DinosaurService) {
+  @Input()
+  dinoGroup: TamedDinosaurGroup | null = null;
+
+  constructor() {
   }
 
-  totalLevel(): number {
-    if (this.service.bestStats === null) {
-      return 0;
+  totalLevel(): number | undefined {
+    if (this.dinoGroup === null || this.dinoGroup.bestStats === null) {
+      return undefined;
     } else {
-      return this.service.bestStats.speed +
-        this.service.bestStats.health +
-        this.service.bestStats.attack +
-        this.service.bestStats.weight +
-        this.service.bestStats.food +
-        this.service.bestStats.oxygen +
-        this.service.bestStats.stamina;
+      return this.dinoGroup.bestStats.speed +
+        this.dinoGroup.bestStats.health +
+        this.dinoGroup.bestStats.attack +
+        this.dinoGroup.bestStats.weight +
+        this.dinoGroup.bestStats.food +
+        this.dinoGroup.bestStats.oxygen +
+        this.dinoGroup.bestStats.stamina;
     }
   }
 }

@@ -34,5 +34,7 @@ export interface BreedingGroup {
 
 export interface TamedDinosaurGroup {
   groupName: string;
+  bestStats: DinosaurStats | null;
+  breedingGroups: BreedingGroup[];
   dinosaurs: TamedDinosaurViewModel[];
 }

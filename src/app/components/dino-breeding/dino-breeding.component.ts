@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DinosaurService} from "../../services/dinosaur.service";
+import {TamedDinosaur} from "../../services/dinosaur.model";
 
 @Component({
   selector: 'app-dino-breeding',
@@ -11,7 +12,7 @@ export class DinoBreedingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.service.dinos = [
+    const dinos = [
       {
         id: 1,
         name: 'Bobby',
@@ -152,7 +153,11 @@ export class DinoBreedingComponent implements OnInit {
         },
         sex: 'M'
       }
-    ];
+    ] as TamedDinosaur[];
+
+    for (let dino of dinos) {
+      this.service.addDino(dino, "Raptors");
+    }
   }
 
   deleteDino($event: number) {

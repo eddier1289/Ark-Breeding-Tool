@@ -21,28 +21,13 @@ interface PotentialBreedingPair {
 @Injectable()
 export class DinosaurService {
   private _dinoGroups: TamedDinosaurGroup[] = [];
-  private _dinos: TamedDinosaurViewModel[] = [];
-  bestStats: DinosaurStats | null = null;
-  breedingGroups: BreedingGroup[] = [];
 
   get dinoGroups(): TamedDinosaurGroup[] {
     return this._dinoGroups;
   }
 
-  get dinos(): TamedDinosaurViewModel[] {
-    return this._dinos.sort((a, b) => a.sex.localeCompare(b.sex));
-  }
-
-  set dinos(value: TamedDinosaur[]) {
-    this.bestStats = this.calculateBestDinoStats(value);
-
-    this._dinos = value.map(d => this.createDinoViewModel(d));
-
-    this.breedingGroups = this.getBreedingGroups();
-  }
-
-  private createDinoViewModel(dino: TamedDinosaur): TamedDinosaurViewModel {
-    return ({...dino, maxStats: this.getMaxStats(dino, this.bestStats)});
+  private createDinoViewModel(dino: TamedDinosaur, bestStats: DinosaurStats | null): TamedDinosaurViewModel {
+    return ({...dino, maxStats: this.getMaxStats(dino, bestStats)});
   }
 
   private getNextDinoId(): number {
@@ -61,11 +46,17 @@ export class DinosaurService {
     let group = this._dinoGroups.find(value => value.groupName === dinoGroup);
 
     if (group === undefined) {
-      group = {groupName: dinoGroup, dinosaurs: []} as TamedDinosaurGroup;
+      group = {groupName: dinoGroup, dinosaurs: [], breedingGroups: [], bestStats: null} as TamedDinosaurGroup;
       this._dinoGroups.push(group);
     }
 
-    group.dinosaurs.push(this.createDinoViewModel(dino));
+    group.bestStats = this.calculateBestDinoStats([...group.dinosaurs, dino]);
+
+    group.dinosaurs.push(this.createDinoViewModel(dino, group.bestStats));
+
+    group.breedingGroups = this.getBreedingGroups(group.dinosaurs);
+
+    console.log(group);
   }
 
   public deleteDino(dinoId: number) {
@@ -119,13 +110,13 @@ export class DinosaurService {
         return goodDinoStats;
       }, []).map(m => m.id);
 
-    return this._dinos.filter(d => goodDinoIds.filter(gm => gm === d.id).length > 0);
+    return dinos.filter(d => goodDinoIds.filter(gm => gm === d.id).length > 0);
   }
 
-  getPotentialBreedingPairs(): PotentialBreedingPair[] {
-    const goodMales = this.getGoodDinos(this._dinos.filter(d => d.sex === 'M'));
+  getPotentialBreedingPairs(dinos: TamedDinosaurViewModel[]): PotentialBreedingPair[] {
+    const goodMales = this.getGoodDinos(dinos.filter(d => d.sex === 'M'));
 
-    let females = this.getGoodDinos(this._dinos.filter(d => d.sex === 'F'));
+    let females = this.getGoodDinos(dinos.filter(d => d.sex === 'F'));
 
     return females.reduce((potentialPairs: PotentialBreedingPair[], currentFemale) => {
       const tmpPairs: PotentialBreedingPair[] = [];
@@ -147,20 +138,20 @@ export class DinosaurService {
 
   }
 
-  getBreedingGroups(): BreedingGroup[] {
-    const goodMales = this.getGoodDinos(this._dinos.filter(d => d.sex === 'M'));
-    const potentialBreedingPairs = this.getPotentialBreedingPairs();
+  getBreedingGroups(dinos: TamedDinosaurViewModel[]): BreedingGroup[] {
+    const goodMales = this.getGoodDinos(dinos.filter(d => d.sex === 'M'));
+    const potentialBreedingPairs = this.getPotentialBreedingPairs(dinos);
 
     const results = potentialBreedingPairs.reduce((groups: BreedingGroup[], currentPair) => {
       let group = groups.find(g => g.male.id === currentPair.maleId);
 
       if (group === undefined) {
-        group = {male: this.getDinoById(currentPair.maleId), females: []};
+        group = {male: this.getDinoById(currentPair.maleId, dinos), females: []};
 
         groups.push(group);
       }
 
-      let female = this.getDinoById(currentPair.femaleId);
+      let female = this.getDinoById(currentPair.femaleId, dinos);
 
       group.females.push({female: female, maxDescendant: this.calculateBestDinoStats([female, group.male])});
 
@@ -172,8 +163,8 @@ export class DinosaurService {
     return results;
   }
 
-  getDinoById(id: number): TamedDinosaurViewModel {
-    return this._dinos.find(v => v.id === id) ?? {} as TamedDinosaurViewModel;
+  getDinoById(id: number, dinos: TamedDinosaurViewModel[]): TamedDinosaurViewModel {
+    return dinos.find(v => v.id === id) ?? {} as TamedDinosaurViewModel;
   }
 
   combineMaxStats(female: (keyof DinosaurStats)[], male: (keyof DinosaurStats)[]): (keyof DinosaurStats)[] {
