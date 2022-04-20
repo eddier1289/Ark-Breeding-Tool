@@ -22,6 +22,10 @@ interface PotentialBreedingPair {
 export class DinosaurService {
   private _dinoGroups: TamedDinosaurGroup[] = [];
 
+  constructor() {
+    this._dinoGroups = JSON.parse(localStorage.getItem('dinoGroups') ?? '[]');
+  }
+
   get dinoGroups(): TamedDinosaurGroup[] {
     return this._dinoGroups;
   }
@@ -62,12 +66,16 @@ export class DinosaurService {
     group.dinosaurs.forEach(d => d.maxStats = this.getMaxStats(d, bestStats));
 
     group.breedingGroups = this.getBreedingGroups(group.dinosaurs);
+
+    localStorage.setItem('dinoGroups', JSON.stringify(this._dinoGroups));
   }
 
   public deleteDino(dinoId: number) {
     for (let dinoGroup of this._dinoGroups) {
       dinoGroup.dinosaurs = dinoGroup.dinosaurs.filter(d => d.id !== dinoId);
     }
+
+    localStorage.setItem('dinoGroups', JSON.stringify(this._dinoGroups));
   }
 
   getMaxStats(dino: TamedDinosaur, maxStats: DinosaurStats | null): (keyof DinosaurStats)[] {
