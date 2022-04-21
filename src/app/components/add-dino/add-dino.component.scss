@@ -1,8 +1,26 @@
+.new-dino-form {
+  mat-form-field {
+    padding: 0.5rem;
+    border: white 0.5px solid;
+  }
 
-.name {
-  width: 72px;
-}
+  input {
+    font-size: 1.25rem;
+  }
 
-input {
-  width: 32px;
+  .name {
+    width: 8rem;
+  }
+
+  .sex {
+    width: 2rem;
+  }
+
+  .stat {
+    width: 3.5rem;
+  }
+
+  button {
+    margin: auto 0.5rem;
+  }
 }

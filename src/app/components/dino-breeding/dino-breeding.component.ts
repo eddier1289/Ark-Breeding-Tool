@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DinosaurService} from "../../services/dinosaur.service";
-import {TamedDinosaur} from "../../services/dinosaur.model";
+import {TamedDinosaurGroup, TamedDinosaurViewModel} from "../../services/dinosaur.model";
 
 @Component({
   selector: 'app-dino-breeding',
@@ -8,6 +8,9 @@ import {TamedDinosaur} from "../../services/dinosaur.model";
   styleUrls: ['./dino-breeding.component.scss']
 })
 export class DinoBreedingComponent {
+  @Input()
+  dinoGroup: TamedDinosaurGroup | null = null;
+
   constructor(public service: DinosaurService) {
   }
 

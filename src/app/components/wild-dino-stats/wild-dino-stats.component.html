@@ -1,0 +1,10 @@
+<div class="wild-dino-stats" fxLayout="row">
+  <div [ngClass]="{'best-stat': containsMaxStat('stamina')}">{{stats?.stamina}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('oxygen')}">{{stats?.oxygen}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('food')}">{{stats?.food}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('weight')}">{{stats?.weight}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('attack')}">{{stats?.attack}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('speed')}">{{stats?.speed}}</div>
+  <div [ngClass]="{'best-stat': containsMaxStat('health')}">{{stats?.health}}</div>
+  <div class="total-level">{{totalLevel()}}</div>
+</div>

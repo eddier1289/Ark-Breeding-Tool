@@ -1,0 +1,5 @@
+<mat-tab-group>
+  <mat-tab *ngFor="let dinoGroup of dinoGroups" [label]="dinoGroup.groupName">
+    <app-dino-breeding [dinoGroup]="dinoGroup"></app-dino-breeding>
+  </mat-tab>
+</mat-tab-group>

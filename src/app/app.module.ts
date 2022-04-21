@@ -10,6 +10,15 @@ import { BestPossibleDinoComponent } from './components/best-possible-dino/best-
 import {DinosaurService} from "./services/dinosaur.service";
 import { AddDinoComponent } from './components/add-dino/add-dino.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import { DinoGroupsComponent } from './components/dino-groups/dino-groups.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import { WildDinoStatsComponent } from './components/wild-dino-stats/wild-dino-stats.component';
+import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
   declarations: [
@@ -17,14 +26,23 @@ import {ReactiveFormsModule} from "@angular/forms";
     DinoBreedingComponent,
     DinoStatsComponent,
     BestPossibleDinoComponent,
-    AddDinoComponent
+    AddDinoComponent,
+    DinoGroupsComponent,
+    WildDinoStatsComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FlexLayoutModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FlexLayoutModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatTabsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   providers: [
     {
       provide: DinosaurService, useClass: DinosaurService

@@ -1,12 +1,39 @@
-<form [formGroup]="dinoForm" fxLayout="row" (ngSubmit)="submit()">
-  <input class="name" type="text" formControlName="name">
-  <input type="text" formControlName="sex">
-  <input type="number" formControlName="stamina">
-  <input type="number" formControlName="oxygen">
-  <input type="number" formControlName="food">
-  <input type="number" formControlName="weight">
-  <input type="number" formControlName="attack">
-  <input type="number" formControlName="speed">
-  <input type="number" formControlName="health">
-  <button type="submit">Add</button>
+<form class="new-dino-form" [formGroup]="dinoForm" fxLayout="row" (ngSubmit)="submit()">
+  <mat-form-field class="name">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" formControlName="name">
+  </mat-form-field>
+  <mat-form-field class="sex">
+    <mat-label>Sex</mat-label>
+    <input matInput type="text" formControlName="sex">
+  </mat-form-field>
+  <mat-form-field class="stat">
+    <mat-label>Stamina</mat-label>
+    <input matInput type="number" formControlName="stamina">
+  </mat-form-field>
+  <mat-form-field class="stat">
+    <mat-label>Oxygen</mat-label>
+    <input matInput type="number" formControlName="oxygen">
+  </mat-form-field>
+  <mat-form-field class="stat">
+    <mat-label>Food</mat-label>
+    <input matInput type="number" formControlName="food">
+  </mat-form-field>
+  <mat-form-field class="stat">
+    <mat-label>Weight</mat-label>
+    <input matInput type="number" formControlName="weight">
+  </mat-form-field>
+  <mat-form-field class="stat">
+    <mat-label>Attack</mat-label>
+    <input matInput type="number" formControlName="attack">
+  </mat-form-field>
+  <mat-form-field class="stat">
+    <mat-label>Speed</mat-label>
+    <input matInput type="number" formControlName="speed">
+  </mat-form-field>
+  <mat-form-field class="stat">
+    <mat-label>Health</mat-label>
+    <input matInput type="number" formControlName="health">
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Add</button>
 </form>
